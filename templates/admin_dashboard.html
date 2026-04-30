@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Administration – MUSIACTU{% endblock %}
+
+{% block content %}
+<h2 class="mb-3">Administration</h2>
+
+<div class="row g-4">
+
+  <!-- CONCERTS -->
+  <div class="col-md-6">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h4>Concerts</h4>
+      <a href="{{ url_for('admin_concert_new') }}" class="btn btn-sm btn-success">
+        + Nouveau concert
+      </a>
+    </div>
+
+    {% for concert in concerts %}
+    <div class="card card-music mb-2 p-3">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <strong class="text-light">{{ concert.title }}</strong><br>
+          <small class="text-muted">
+            {{ concert.date.strftime("%d/%m/%Y %H:%M") }} – {{ concert.place }}
+          </small>
+        </div>
+
+        <div class="text-end">
+
+          <!-- Modifier -->
+          <a href="{{ url_for('admin_concert_edit', concert_id=concert.id) }}"
+             class="btn btn-sm btn-outline-light me-1">
+            Modifier
+          </a>
+
+          <!-- Supprimer -->
+          <form method="post"
+                action="{{ url_for('admin_concert_delete', concert_id=concert.id) }}"
+                style="display:inline;">
+            {{ delete_form.hidden_tag() }}
+            <button type="submit"
+                    class="btn btn-sm btn-outline-danger"
+                    onclick="return confirm('Supprimer ce concert ?');">
+              Supprimer
+            </button>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+    {% else %}
+    <p class="text-muted">Aucun concert.</p>
+    {% endfor %}
+  </div>
+
+  <!-- ACTUALITÉS -->
+  <div class="col-md-6">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h4>Actualités</h4>
+      <a href="{{ url_for('admin_news_new') }}" class="btn btn-sm btn-success">
+        + Nouvelle actualité
+      </a>
+    </div>
+
+    {% for news in news_items %}
+    <div class="card card-music mb-2 p-3">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <strong class="text-light">{{ news.title }}</strong><br>
+          <small class="text-muted">
+            {{ news.created_at.strftime("%d/%m/%Y") }} –
+            {{ news.category.name if news.category else "Général" }}
+          </small>
+        </div>
+
+        <div class="text-end">
+
+          <!-- Modifier -->
+          <a href="{{ url_for('admin_news_edit', news_id=news.id) }}"
+             class="btn btn-sm btn-outline-light me-1">
+            Modifier
+          </a>
+
+          <!-- Supprimer -->
+          <form method="post"
+                action="{{ url_for('admin_news_delete', news_id=news.id) }}"
+                style="display:inline;">
+            {{ delete_form.hidden_tag() }}
+            <button type="submit"
+                    class="btn btn-sm btn-outline-danger"
+                    onclick="return confirm('Supprimer cette actualité ?');">
+              Supprimer
+            </button>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+    {% else %}
+    <p class="text-muted">Aucune actualité.</p>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}

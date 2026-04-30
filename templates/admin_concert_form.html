@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Nouveau concert – MUSIACTU{% endblock %}
+
+{% block content %}
+<div class="card card-music p-4">
+  <h3 class="mb-4">Créer un concert</h3>
+
+  <form method="post">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+      {{ form.title.label(class="form-label") }}
+      {{ form.title(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.date.label(class="form-label") }}
+      {{ form.date(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.place.label(class="form-label") }}
+      {{ form.place(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.type.label(class="form-label") }}
+      {{ form.type(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.total_seats.label(class="form-label") }}
+      {{ form.total_seats(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.description.label(class="form-label") }}
+      {{ form.description(class="form-control", rows=3) }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.category_id.label(class="form-label") }}
+      {{ form.category_id(class="form-select") }}
+    </div>
+
+    {{ form.submit(class="btn btn-success") }}
+  </form>
+</div>
+{% endblock %}

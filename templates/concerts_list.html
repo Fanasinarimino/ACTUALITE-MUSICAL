@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Concerts – MUSIACTU{% endblock %}
+{% block content %}
+<h2 class="mb-3">Liste des concerts</h2>
+
+<form class="row g-2 mb-4">
+  <div class="col-md-3">
+    <input type="text" name="type" class="form-control"
+           placeholder="Type (Jazz, Rock...)" value="{{ request.args.get('type', '') }}">
+  </div>
+  <div class="col-md-3">
+    <input type="text" name="place" class="form-control"
+           placeholder="Lieu" value="{{ request.args.get('place', '') }}">
+  </div>
+  <div class="col-md-3">
+    <input type="date" name="date" class="form-control"
+           value="{{ request.args.get('date', '') }}">
+  </div>
+  <div class="col-md-3">
+    <button class="btn btn-primary w-100">Filtrer</button>
+  </div>
+</form>
+
+{% for concert in concerts %}
+<div class="card-white p-3 mb-3 hover-shadow">
+
+  <!-- Toute la carte est cliquable -->
+  <a href="{{ url_for('concert_detail', concert_id=concert.id) }}"
+     class="text-decoration-none text-dark d-block">
+
+    <h5 class="mb-1">{{ concert.title }}</h5>
+
+    <small class="text-muted">
+      {{ concert.date.strftime("%d/%m/%Y %H:%M") }} – {{ concert.place }}
+    </small>
+
+    <br>
+
+    <span class="badge bg-primary mt-2">{{ concert.type }}</span>
+
+  </a>
+
+  <!-- Bouton clair et visible -->
+  <div class="text-end mt-2">
+    <a href="{{ url_for('concert_detail', concert_id=concert.id) }}"
+       class="btn btn-outline-primary btn-sm">
+      Voir détails
+    </a>
+  </div>
+
+</div>
+
+{% else %}
+<p>Aucun concert trouvé.</p>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,51 @@
+body {
+  background: radial-gradient(circle at top, #1b1b3a 0, #050510 60%);
+  color: #f8f9fa;
+}
+
+.bg-gradient-music {
+  background: linear-gradient(90deg, #6f42c1, #d63384, #fd7e14);
+}
+
+.card-music {
+  background: rgba(15, 15, 35, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0.75rem;
+}
+
+.badge-genre {
+  background: linear-gradient(135deg, #20c997, #0dcaf0);
+  color: #050510;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: 0.2s;
+}
+
+/* Rendre le texte lisible sur fond sombre */
+.card-music, .card, body {
+  color: #f2f2f2 !important; /* texte clair */
+}
+
+/* Rendre les textes "muted" lisibles */
+.text-muted, .text-secondary, small {
+  color: #cccccc !important; /* gris clair lisible */
+}
+
+/* Rendre les labels lisibles */
+.form-label {
+  color: #e6e6e6 !important;
+}
+
+/* Rendre les badges lisibles */
+.badge {
+  color: white !important;
+}
+
+/* Rendre les inputs lisibles */
+.form-control, textarea {
+  background: #1e1e1e !important;
+  color: #ffffff !important;
+  border: 1px solid #444 !important;
+}

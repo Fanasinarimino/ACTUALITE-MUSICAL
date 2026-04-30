@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Nouvelle actualité – MUSIACTU{% endblock %}
+
+{% block content %}
+<div class="card card-music p-4">
+  <h3 class="mb-4">Créer une actualité</h3>
+
+  <form method="post">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+      {{ form.title.label(class="form-label") }}
+      {{ form.title(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.content.label(class="form-label") }}
+      {{ form.content(class="form-control", rows=5) }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.category_id.label(class="form-label") }}
+      {{ form.category_id(class="form-select") }}
+    </div>
+
+    {{ form.submit(class="btn btn-success") }}
+  </form>
+</div>
+{% endblock %}

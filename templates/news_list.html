@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Actualités – MUSIACTU{% endblock %}
+{% block content %}
+<h2 class="mb-3">Actualités musicales</h2>
+
+<div class="mb-3">
+  <a href="{{ url_for('news_list') }}"
+     class="btn btn-sm {% if not selected_category_id %}btn-primary{% else %}btn-outline-primary{% endif %}">
+    Toutes
+  </a>
+  {% for cat in categories %}
+  <a href="{{ url_for('news_list', category_id=cat.id) }}"
+     class="btn btn-sm {% if selected_category_id == cat.id %}btn-primary{% else %}btn-outline-primary{% endif %}">
+    {{ cat.name }}
+  </a>
+  {% endfor %}
+</div>
+
+{% for news in news_items %}
+<div class="card card-music mb-3 p-3">
+  <div class="d-flex justify-content-between">
+    <span class="badge badge-genre">{{ news.category.name if news.category else "Général" }}</span>
+    <small class="text-muted">{{ news.created_at.strftime("%d/%m/%Y") }}</small>
+  </div>
+  <h5 class="mt-2">{{ news.title }}</h5>
+  <p class="mb-0 text-secondary">
+    {{ news.content[:220] }}{% if news.content|length > 220 %}...{% endif %}
+  </p>
+</div>
+{% else %}
+<p>Aucune actualité.</p>
+{% endfor %}
+{% endblock %}

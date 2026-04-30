@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Accueil – MUSIACTU{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-md-6">
+    <h2 class="mb-3">Dernières actualités</h2>
+    {% for news in latest_news %}
+    <div class="card card-music mb-3 p-3">
+      <div class="d-flex justify-content-between">
+        <span class="badge badge-genre">{{ news.category.name if news.category else "Général" }}</span>
+        <small class="text-muted">{{ news.created_at.strftime("%d/%m/%Y") }}</small>
+      </div>
+      <h5 class="mt-2">{{ news.title }}</h5>
+      <p class="mb-0 text-secondary">
+        {{ news.content[:160] }}{% if news.content|length > 160 %}...{% endif %}
+      </p>
+    </div>
+    {% else %}
+    <p>Aucune actualité pour le moment.</p>
+    {% endfor %}
+  </div>
+
+  <div class="col-md-6">
+    <h2 class="mb-3">Concerts à venir</h2>
+    {% for concert in upcoming_concerts %}
+    <div class="card card-music mb-3 p-3">
+      <div class="d-flex justify-content-between">
+        <span class="badge badge-genre">{{ concert.type }}</span>
+        <small class="text-muted">
+          {{ concert.date.strftime("%d/%m/%Y %H:%M") }} – {{ concert.place }}
+        </small>
+      </div>
+      <h5 class="mt-2">
+        <a class="link-light text-decoration-none"
+           href="{{ url_for('concert_detail', concert_id=concert.id) }}">
+          {{ concert.title }}
+        </a>
+      </h5>
+      <small class="text-secondary">
+        Places restantes : {{ concert.remaining_seats }}
+      </small>
+    </div>
+    {% else %}
+    <p>Aucun concert à venir.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
