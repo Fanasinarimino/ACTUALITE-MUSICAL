@@ -9,6 +9,7 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
 
+
 # Concerts
 class Concert(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -19,18 +20,26 @@ class Concert(db.Model):
     total_seats = db.Column(db.Integer, nullable=False, default=100)
     reserved_seats = db.Column(db.Integer, nullable=False, default=0)
     description = db.Column(db.Text, nullable=True)
+
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
     category = db.relationship("Category", backref="concerts")
 
-    # Indique si le concert est passé
+    # 🔥 Cascade delete : supprime automatiquement les commentaires liés
+    comments = db.relationship(
+        "Comment",
+        backref="concert",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )
+
     @property
     def is_past(self):
         return self.date < datetime.now()
 
-    # Places restantes pour la réservation
     @property
     def remaining_seats(self):
         return self.total_seats - self.reserved_seats
+
 
 # Actualités musicales
 class News(db.Model):
@@ -38,8 +47,10 @@ class News(db.Model):
     title = db.Column(db.String(150), nullable=False)
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now)
+
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
     category = db.relationship("Category", backref="news")
+
 
 # Commentaires sur les concerts passés
 class Comment(db.Model):
@@ -47,8 +58,14 @@ class Comment(db.Model):
     author_name = db.Column(db.String(80), nullable=False)
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now)
-    concert_id = db.Column(db.Integer, db.ForeignKey("concert.id"), nullable=False)
-    concert = db.relationship("Concert", backref="comments")
+
+    #Cascade delete MySQL + SQLAlchemy
+    concert_id = db.Column(
+        db.Integer,
+        db.ForeignKey("concert.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
 
 # Utilisateur admin pour la partie Administration
 class AdminUser(UserMixin, db.Model):

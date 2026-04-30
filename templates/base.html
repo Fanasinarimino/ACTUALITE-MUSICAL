@@ -22,6 +22,7 @@
                 data-bs-target="#navbarNav">
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
@@ -30,6 +31,7 @@
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('news_list') }}">Actualités</a>
             </li>
+
             {% for cat in Category.query.all() %}
             <li class="nav-item">
               <a class="nav-link"
@@ -39,20 +41,27 @@
             </li>
             {% endfor %}
           </ul>
+
           <ul class="navbar-nav">
             {% if current_user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('admin_dashboard') }}">Admin</a>
             </li>
+
+            <!-- 🔥 Déconnexion en GET (plus de CSRF) -->
             <li class="nav-item">
-              <form method="post" action="{{ url_for('admin_logout') }}">
-                <button class="btn btn-sm btn-outline-light ms-2">Déconnexion</button>
-              </form>
+              <a class="btn btn-sm btn-outline-light ms-2"
+                 href="{{ url_for('admin_logout') }}">
+                Déconnexion
+              </a>
             </li>
+
             {% else %}
             <li class="nav-item">
               <a class="btn btn-sm btn-outline-light"
-                 href="{{ url_for('admin_login') }}">Connexion admin</a>
+                 href="{{ url_for('admin_login') }}">
+                Connexion admin
+              </a>
             </li>
             {% endif %}
           </ul>

@@ -195,7 +195,7 @@ def admin_login():
     return render_template("admin_login.html", form=form)
 
 # Logout admin
-@app.route("/admin/logout", methods=["GET", "POST"])
+@app.route("/admin/logout")
 @login_required
 def admin_logout():
     logout_user()
